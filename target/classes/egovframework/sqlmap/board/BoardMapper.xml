@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egov.board.dao.BoardMapper">
+	<!-- 글저장 -->
+	<select id="saveBoard" statementType="CALLABLE" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	<!-- serviceImpl inid를 myid로 바꿔서,, myid 받음.  paramMap.put(-->
+	<!-- 여기서 out_states는 return되는 HashMap에서의 키의 이름이라고 생각.(위의 resultType ) -->
+	<!-- 데이터유형 varchar은 상관없지만, integer는 ,jdbcType=INTEGER로 일치시켜줘야함. -->
+	<!-- javaType=INTEGER - 값을 저장할 타입을 이렇게 명시하면, hashmap에 담기는 값의 타입. -->
+	<!-- serviceImpl의 paramMap.put의 "" 키 부분과 // 여기 #{}과 일치해야함. -->
+	{
+		call sp_saveboard(
+		#{in_title, mode=IN}, 
+		#{in_content, mode=IN},
+		#{in_userid, mode=IN}, 
+		#{out_state, mode=OUT,jdbcType=INTEGER,javaType=INTEGER} 
+		)
+	}	
+	</select>
+	
+	<!-- 글조 회  -->
+	<select id="showBoard" statementType="CALLABLE" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	<!-- serviceImpl inid를 myid로 바꿔서,, myid 받음.  paramMap.put(-->
+	<!-- 여기서 out_states는 return되는 HashMap에서의 키의 이름이라고 생각.(위의 resultType ) -->
+	<!-- 데이터유형 varchar은 상관없지만, integer는 ,jdbcType=INTEGER로 일치시켜줘야함. -->
+	<!-- javaType=INTEGER - 값을 저장할 타입을 이렇게 명시하면, hashmap에 담기는 값의 타입. -->
+	<!-- serviceImpl의 paramMap.put의 "" 키 부분과 // 여기 #{}과 일치해야함. -->
+	{
+		call sp_showboard(
+		#{in_brdid, mode=IN}, 
+		#{out_state, mode=OUT,jdbcType=INTEGER,javaType=INTEGER} 
+		)
+	}	
+	</select>
+	
+	<!-- 글목 록 조 회  -->
+	<select id="showBoardList" statementType="CALLABLE" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+	<!-- serviceImpl inid를 myid로 바꿔서,, myid 받음.  paramMap.put(-->
+	<!-- 여기서 out_states는 return되는 HashMap에서의 키의 이름이라고 생각.(위의 resultType ) -->
+	<!-- 데이터유형 varchar은 상관없지만, integer는 ,jdbcType=INTEGER로 일치시켜줘야함. -->
+	<!-- javaType=INTEGER - 값을 저장할 타입을 이렇게 명시하면, hashmap에 담기는 값의 타입. -->
+	<!-- serviceImpl의 paramMap.put의 "" 키 부분과 // 여기 #{}과 일치해야함. -->
+	{
+		call sp_showboardlist(
+		#{out_state, mode=OUT,jdbcType=INTEGER,javaType=INTEGER} 
+		)
+	}	
+	</select>
+	
+	<select id="showBoardList" statementType="CALLABLE" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		{
+		call sp_showboardlist(
+		#{pi_offset},#{pi_RecordCountPerPage},#{out_listcount, mode=OUT,jdbcType=INTEGER,javaType=INTEGER},#{out_state, mode=OUT,jdbcType=INTEGER,javaType=INTEGER} 
+		)
+	}	
+	</select>
+	
+</mapper>
